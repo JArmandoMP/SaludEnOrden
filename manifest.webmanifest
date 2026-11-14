@@ -1,0 +1,32 @@
+{
+  "name": "SaludEnOrden",
+  "short_name": "SaludEnOrden",
+  "description": "Tu historial médico personal, privado y siempre a mano. Perfil, signos vitales, historial clínico, tratamientos, citas y documentos.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0aa4d8",
+  "theme_color": "#0aa4d8",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "assets/img/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/img/logo-mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

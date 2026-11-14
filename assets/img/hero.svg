@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 380" width="460" height="380" role="img" aria-label="Ilustración de salud: corazón, expediente médico y escudo de protección">
+  <defs>
+    <linearGradient id="heartGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#93c5fd"/>
+      <stop offset=".45" stop-color="#3b82f6"/>
+      <stop offset="1" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="shieldGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5eead4"/>
+      <stop offset="1" stop-color="#0d9488"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#eef6ff"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#7dd3fc" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#7dd3fc" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="softShadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="14" stdDeviation="14" flood-color="#0b2a5b" flood-opacity=".22"/>
+    </filter>
+    <filter id="miniShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#0b2a5b" flood-opacity=".16"/>
+    </filter>
+  </defs>
+
+  <circle cx="238" cy="190" r="165" fill="url(#glow)"/>
+  <circle cx="238" cy="190" r="128" fill="none" stroke="#ffffff" stroke-opacity=".28" stroke-width="1.5"/>
+  <circle cx="238" cy="190" r="158" fill="none" stroke="#ffffff" stroke-opacity=".16" stroke-width="1.2" stroke-dasharray="3 9"/>
+
+  <!-- sparkles -->
+  <g fill="#ffffff" opacity=".7">
+    <path d="M356 82l3.2 8.8 8.8 3.2-8.8 3.2L356 106l-3.2-8.8-8.8-3.2 8.8-3.2z"/>
+    <path d="M96 104l2.2 6 6 2.2-6 2.2-2.2 6-2.2-6-6-2.2 6-2.2z" opacity=".75"/>
+    <circle cx="383" cy="180" r="3.2"/>
+    <circle cx="111" cy="238" r="2.4" opacity=".7"/>
+  </g>
+
+  <!-- floating medical record card -->
+  <g transform="rotate(-7 138 114)" filter="url(#miniShadow)">
+    <rect x="70" y="62" width="136" height="100" rx="18" fill="url(#cardGrad)"/>
+    <rect x="70" y="62" width="136" height="100" rx="18" fill="none" stroke="#dbeafe"/>
+    <rect x="86" y="78" width="28" height="28" rx="9" fill="#dbeafe"/>
+    <path d="M100 85v14M93 92h14" stroke="#2563eb" stroke-width="2.6" stroke-linecap="round"/>
+    <rect x="124" y="81" width="60" height="7" rx="3.5" fill="#bfdbfe"/>
+    <rect x="124" y="94" width="42" height="6" rx="3" fill="#e2ecf9"/>
+    <rect x="86" y="120" width="98" height="6" rx="3" fill="#e2ecf9"/>
+    <rect x="86" y="134" width="72" height="6" rx="3" fill="#e2ecf9"/>
+    <circle cx="177" cy="122" r="4" fill="#34d399"/>
+  </g>
+
+  <!-- heart -->
+  <g filter="url(#softShadow)">
+    <path d="M238 286c-12-10-74-49-86-93-8-30 8-59 38-64 20-3 38 6 48 24 10-18 28-27 48-24 30 5 46 34 38 64-12 44-74 83-86 93z" fill="url(#heartGrad)"/>
+    <path d="M238 286c-12-10-74-49-86-93-8-30 8-59 38-64 20-3 38 6 48 24 10-18 28-27 48-24 30 5 46 34 38 64-12 44-74 83-86 93z" fill="none" stroke="#ffffff" stroke-opacity=".18" stroke-width="2"/>
+    <ellipse cx="205" cy="163" rx="33" ry="20" fill="#ffffff" opacity=".18" transform="rotate(-28 205 163)"/>
+    <path d="M174 207h34l13-28 19 52 17-38 12 14h35" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="304" cy="207" r="5" fill="#a5f3fc"/>
+  </g>
+
+  <!-- shield -->
+  <g transform="translate(322 250)" filter="url(#miniShadow)">
+    <path d="M38 2l33 12v26c0 24-16 38-33 46C21 78 5 64 5 40V14z" fill="url(#shieldGrad)"/>
+    <path d="M38 2l33 12v26c0 24-16 38-33 46C21 78 5 64 5 40V14z" fill="none" stroke="#ffffff" stroke-opacity=".28" stroke-width="1.5"/>
+    <path d="M38 25v28M24 39h28" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <!-- pill -->
+  <g transform="rotate(35 349 86)" filter="url(#miniShadow)">
+    <rect x="317" y="63" width="64" height="34" rx="17" fill="#ffffff"/>
+    <path d="M349 63h15a17 17 0 0 1 0 34h-15z" fill="#38bdf8"/>
+    <rect x="317" y="63" width="64" height="34" rx="17" fill="none" stroke="#cfe3f8"/>
+    <path d="M349 66v28" stroke="#dbeafe" stroke-width="1.6"/>
+  </g>
+
+  <!-- pulse card -->
+  <g transform="rotate(6 118 286)" filter="url(#miniShadow)">
+    <rect x="48" y="260" width="140" height="58" rx="16" fill="url(#cardGrad)"/>
+    <rect x="48" y="260" width="140" height="58" rx="16" fill="none" stroke="#dbeafe"/>
+    <path d="M66 289h18l8-16 11 30 10-23 7 9h30" fill="none" stroke="#2563eb" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="168" cy="278" r="5" fill="#34d399"/>
+    <rect x="66" y="271" width="38" height="5" rx="2.5" fill="#dbeafe"/>
+  </g>
+</svg>

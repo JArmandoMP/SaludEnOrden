@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#10b981"/>
+      <stop offset="0.38" stop-color="#0aa4d8"/>
+      <stop offset="0.72" stop-color="#2f7ff0"/>
+      <stop offset="1" stop-color="#5b8cf7"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="0.22" cy="0.18" r="0.55">
+      <stop offset="0" stop-color="#8dfce8" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#8dfce8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="0.82" cy="0.78" r="0.6">
+      <stop offset="0" stop-color="#a5c4ff" stop-opacity="0.42"/>
+      <stop offset="1" stop-color="#a5c4ff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow3" cx="0.5" cy="0.55" r="0.65">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blur6" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+    <polygon id="hex" points="1,0 0.5,0.866 -0.5,0.866 -1,0 -0.5,-0.866 0.5,-0.866"/>
+    <path id="plus" d="M-1 -3 L1 -3 L1 -1 L3 -1 L3 1 L1 1 L1 3 L-1 3 L-1 1 L-3 1 L-3 -1 L-1 -1 Z"/>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <rect width="1600" height="900" fill="url(#glow3)"/>
+  <rect width="1600" height="900" fill="url(#glow1)"/>
+  <rect width="1600" height="900" fill="url(#glow2)"/>
+
+  <!-- Hexágonos rellenos muy tenues -->
+  <use href="#hex" transform="translate(400 320) scale(90)" fill="#ffffff" opacity="0.05"/>
+  <use href="#hex" transform="translate(900 430) scale(120)" fill="#ffffff" opacity="0.05"/>
+  <use href="#hex" transform="translate(1310 545) scale(100)" fill="#ffffff" opacity="0.055"/>
+  <use href="#hex" transform="translate(700 710) scale(80)" fill="#ffffff" opacity="0.05"/>
+  <use href="#hex" transform="translate(150 570) scale(70)" fill="#ffffff" opacity="0.05"/>
+
+  <!-- Hexágonos con contorno -->
+  <g fill="none" stroke="#ffffff" stroke-width="1.6" vector-effect="non-scaling-stroke">
+    <use href="#hex" transform="translate(120 150) scale(70)" opacity="0.26"/>
+    <use href="#hex" transform="translate(262 262) scale(46)" opacity="0.18"/>
+    <use href="#hex" transform="translate(90 424) scale(38)" opacity="0.16"/>
+    <use href="#hex" transform="translate(480 122) scale(55)" opacity="0.22"/>
+    <use href="#hex" transform="translate(622 212) scale(34)" opacity="0.15"/>
+    <use href="#hex" transform="translate(762 92) scale(88)" opacity="0.24"/>
+    <use href="#hex" transform="translate(942 172) scale(40)" opacity="0.16"/>
+    <use href="#hex" transform="translate(1082 112) scale(60)" opacity="0.2"/>
+    <use href="#hex" transform="translate(1242 222) scale(30)" opacity="0.14"/>
+    <use href="#hex" transform="translate(1382 142) scale(72)" opacity="0.22"/>
+    <use href="#hex" transform="translate(1502 322) scale(44)" opacity="0.17"/>
+    <use href="#hex" transform="translate(1332 482) scale(36)" opacity="0.14"/>
+    <use href="#hex" transform="translate(1462 642) scale(58)" opacity="0.18"/>
+    <use href="#hex" transform="translate(1522 762) scale(34)" opacity="0.13"/>
+    <use href="#hex" transform="translate(1182 702) scale(40)" opacity="0.15"/>
+    <use href="#hex" transform="translate(202 762) scale(50)" opacity="0.18"/>
+    <use href="#hex" transform="translate(342 642) scale(28)" opacity="0.13"/>
+    <use href="#hex" transform="translate(60 652) scale(30)" opacity="0.14"/>
+    <use href="#hex" transform="translate(542 462) scale(42)" opacity="0.15"/>
+    <use href="#hex" transform="translate(1042 382) scale(30)" opacity="0.13"/>
+  </g>
+
+  <!-- Cruces médicas -->
+  <g fill="#ffffff">
+    <use href="#plus" transform="translate(352 182) scale(11)" opacity="0.3"/>
+    <use href="#plus" transform="translate(702 302) scale(8)" opacity="0.22"/>
+    <use href="#plus" transform="translate(1002 262) scale(10)" opacity="0.24"/>
+    <use href="#plus" transform="translate(1302 382) scale(13)" opacity="0.26"/>
+    <use href="#plus" transform="translate(202 502) scale(8)" opacity="0.2"/>
+    <use href="#plus" transform="translate(852 522) scale(7)" opacity="0.18"/>
+    <use href="#plus" transform="translate(1152 602) scale(9)" opacity="0.2"/>
+    <use href="#plus" transform="translate(1452 202) scale(8)" opacity="0.2"/>
+    <use href="#plus" transform="translate(502 742) scale(10)" opacity="0.22"/>
+    <use href="#plus" transform="translate(902 782) scale(7)" opacity="0.16"/>
+    <use href="#plus" transform="translate(62 302) scale(9)" opacity="0.2"/>
+    <use href="#plus" transform="translate(1552 522) scale(10)" opacity="0.2"/>
+  </g>
+
+  <!-- Puntos de vida -->
+  <g fill="#ffffff">
+    <circle cx="240" cy="380" r="3" opacity="0.3"/>
+    <circle cx="560" cy="240" r="2.5" opacity="0.26"/>
+    <circle cx="830" cy="150" r="3" opacity="0.3"/>
+    <circle cx="1180" cy="330" r="2.5" opacity="0.24"/>
+    <circle cx="1440" cy="440" r="3" opacity="0.26"/>
+    <circle cx="420" cy="540" r="2.5" opacity="0.22"/>
+    <circle cx="980" cy="640" r="3" opacity="0.24"/>
+    <circle cx="700" cy="450" r="2" opacity="0.2"/>
+    <circle cx="1290" cy="740" r="2.5" opacity="0.22"/>
+    <circle cx="150" cy="700" r="2.5" opacity="0.22"/>
+    <circle cx="1060" cy="480" r="2" opacity="0.2"/>
+    <circle cx="640" cy="820" r="2.5" opacity="0.2"/>
+  </g>
+
+  <!-- Línea de latido (ECG) con resplandor -->
+  <path d="M0 690 L140 690 L156 676 L172 690 L210 690 L222 672 L234 690 L290 690 L306 668 L322 690 L352 690 L372 600 L392 760 L412 655 L428 690 L478 690 L494 664 L510 690 L570 690 L586 676 L602 690 L650 690 L668 620 L686 745 L704 648 L720 690 L780 690 L796 676 L812 690 L880 690 L896 668 L912 690 L980 690 L998 664 L1016 690 L1080 690 L1100 606 L1120 752 L1140 652 L1158 690 L1220 690 L1236 674 L1252 690 L1330 690 L1346 668 L1362 690 L1600 690"
+        fill="none" stroke="#ffffff" stroke-width="10" opacity="0.35" filter="url(#blur6)"/>
+  <path d="M0 690 L140 690 L156 676 L172 690 L210 690 L222 672 L234 690 L290 690 L306 668 L322 690 L352 690 L372 600 L392 760 L412 655 L428 690 L478 690 L494 664 L510 690 L570 690 L586 676 L602 690 L650 690 L668 620 L686 745 L704 648 L720 690 L780 690 L796 676 L812 690 L880 690 L896 668 L912 690 L980 690 L998 664 L1016 690 L1080 690 L1100 606 L1120 752 L1140 652 L1158 690 L1220 690 L1236 674 L1252 690 L1330 690 L1346 668 L1362 690 L1600 690"
+        fill="none" stroke="#ffffff" stroke-width="3.4" opacity="0.9" stroke-linejoin="round" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,18 @@
+# Dependencias y artefactos generados
+node_modules/
+dist/*.exe
+
+# Respaldos y datos personales (NUNCA subir: contiene información de salud)
+Respaldo de DATOS/
+*.zip
+
+# Copias de versiones anteriores
+Historial Medico Personal - v*/
+
+# Sesiones locales de OpenCode
+ses_*.json
+
+# Sistema
+*.log
+.DS_Store
+__pycache__/
