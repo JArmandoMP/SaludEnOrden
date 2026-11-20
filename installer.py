@@ -1,7 +1,7 @@
-import os, sys, time, zipfile, ctypes, subprocess
+import os, sys, time, shutil, zipfile, ctypes, subprocess
 
 APP_NAME = "SaludEnOrden"
-APP_VERSION = "0.13.2.2"   # sincronizar con index.html (?v=) en cada subida de version
+APP_VERSION = "0.13.2.3"   # sincronizar con index.html (?v=) en cada subida de version
 BUNDLE = "app_bundle.zip"
 UNINSTALL_KEY = r"Software\Microsoft\Windows\CurrentVersion\Uninstall\%s" % APP_NAME
 KNOWN_DIRS = (
@@ -50,8 +50,83 @@ def default_install_dir():
     return os.path.join(base, APP_NAME)
 
 
+STANDARD_DIR = default_install_dir()
+
+
 def _is_installed(loc):
     return bool(loc) and os.path.isdir(loc) and os.path.exists(os.path.join(loc, "SaludEnOrden.exe"))
+
+
+def _same_path(a, b):
+    return os.path.normcase(os.path.abspath(a)) == os.path.normcase(os.path.abspath(b))
+
+
+def legacy_install_dirs(standard_dir):
+    """Instalaciones anteriores fuera de la ruta estandar.
+    Solo se consideran rutas dentro de Program Files/Program Files (x86)
+    para no borrar nunca una carpeta de datos personales."""
+    import winreg
+    roots = [
+        os.environ.get("ProgramFiles(x86)", "C:\\Program Files (x86)"),
+        os.environ.get("ProgramFiles", "C:\\Program Files"),
+    ]
+    roots = [os.path.normcase(os.path.abspath(r)) for r in roots if r]
+    found = []
+
+    def add(loc):
+        if not loc:
+            return
+        full = os.path.normcase(os.path.abspath(loc))
+        if _same_path(loc, standard_dir):
+            return
+        if not any(full.startswith(root + os.sep) for root in roots):
+            return
+        if _is_installed(loc) and loc not in found:
+            found.append(loc)
+
+    for hive in (winreg.HKEY_CURRENT_USER, winreg.HKEY_LOCAL_MACHINE):
+        try:
+            key = winreg.OpenKey(hive, UNINSTALL_KEY)
+            try:
+                loc, _ = winreg.QueryValueEx(key, "InstallLocation")
+            finally:
+                winreg.CloseKey(key)
+            add(loc)
+        except Exception:
+            pass
+    for d in KNOWN_DIRS:
+        add(d)
+    return found
+
+
+def remove_legacy_installs(standard_dir, dirs):
+    """Borra la instalacion anterior SOLO despues de verificar la nueva."""
+    if not dirs:
+        return
+    if not _is_installed(standard_dir):
+        raise RuntimeError("La nueva instalacion no paso la verificacion; no se borra nada.")
+    for d in dirs:
+        if _same_path(d, standard_dir) or not _is_installed(d):
+            log(" migracion: se omite ruta no valida " + str(d))
+            continue
+        shutil.rmtree(d, ignore_errors=True)
+        if os.path.isdir(d):
+            log(" migracion: no se pudo eliminar " + d)
+        else:
+            log(" migracion: instalacion anterior eliminada " + d)
+    # Si quedara una clave HKLM apuntando a la ruta vieja, se retira.
+    try:
+        import winreg
+        key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, UNINSTALL_KEY)
+        try:
+            loc, _ = winreg.QueryValueEx(key, "InstallLocation")
+        finally:
+            winreg.CloseKey(key)
+        if loc and any(_same_path(loc, d) for d in dirs):
+            winreg.DeleteKey(winreg.HKEY_LOCAL_MACHINE, UNINSTALL_KEY)
+            log(" migracion: clave HKLM obsoleta eliminada")
+    except Exception:
+        pass
 
 
 def detect_install_dir():
@@ -161,7 +236,7 @@ def create_shortcut(target, shortcut_path, icon=None, workdir=None):
         return False
 
 
-def perform_install(target, bundle, run_after=False):
+def perform_install(target, bundle, run_after=False, migrate=True):
     log("=== instalacion v%s en %s ===" % (APP_VERSION, target))
     if app_running():
         log("app en ejecucion: cerrando...")
@@ -204,6 +279,15 @@ def perform_install(target, bundle, run_after=False):
     winreg.CloseKey(key)
     log("registro actualizado. OK")
 
+    # Migracion: instalar en x86, verificar y solo entonces borrar la instalacion vieja.
+    if migrate:
+        old_dirs = legacy_install_dirs(target)
+        if old_dirs:
+            log("migracion detectada desde: " + ", ".join(old_dirs))
+            remove_legacy_installs(target, old_dirs)
+        else:
+            log("no habia instalaciones anteriores fuera de la ruta estandar.")
+
     if run_after:
         try:
             subprocess.Popen(["explorer.exe", launcher], cwd=target)
@@ -224,7 +308,8 @@ def main():
 
     existing = detect_install_dir()
     if not target:
-        target = existing or default_install_dir()
+        # Regla fija: la ruta de instalacion siempre es Program Files (x86).
+        target = STANDARD_DIR
 
     bundle = resource_path(BUNDLE)
     if not os.path.exists(bundle):
@@ -232,10 +317,14 @@ def main():
         return 2
 
     if not silent:
-        if existing:
-            Text = ("Se detecto una instalacion existente en:\n%s\n\n"
-                    "Se actualizara sin desinstalar ni borrar tus datos.\n\n"
-                    "¿Continuar?" % existing)
+        if existing and not _same_path(existing, target):
+            Text = ("Se detecto una instalacion anterior en:\n%s\n\n"
+                    "Se instalara la version nueva en:\n%s\n"
+                    "y se eliminara la carpeta anterior solo despues de verificar que la nueva funciona.\n\n"
+                    "Tus datos personales NO se tocaran.\n\n¿Continuar?" % (existing, target))
+        elif existing:
+            Text = ("Se actualizara la instalacion existente en:\n%s\n\n"
+                    "Sin desinstalar ni borrar tus datos.\n\n¿Continuar?" % target)
         else:
             Text = ("Instalar %s v%s en:\n%s\n\n¿Continuar?" % (APP_NAME, APP_VERSION, target))
         if dialog(Text, "Instalar " + APP_NAME, MB_OKCANCEL | MB_ICONQUESTION) != IDOK:

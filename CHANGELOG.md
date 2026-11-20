@@ -6,19 +6,19 @@ Fuente de verdad de la versión: el parámetro `?v=` en `index.html`.
 
 ## Último registro (para resúmenes rápidos)
 
-- **Versión:** `0.13.2.2`
+- **Versión:** `0.13.2.3`
 - **Fecha:** 2026-11-20
-- **Qué se hizo:** Se reforzó el instalador (detección en HKCU/HKLM y en ambas rutas de Program Files,
-  cierre gradual de la app, diálogos nativos sin dependencia de tkinter, Escritorio redirigido a OneDrive)
-  y el desinstalador (accesos, registro en ambos hives y conservación de datos por defecto). Se migró la
-  instalación real a `C:\Program Files (x86)\SaludEnOrden` sin desinstalar ni tocar el perfil WebView2.
-- **Qué genera:** `dist\SaludEnOrden-v0.13.2.2.exe`, desinstalador, `app_bundle.zip` y la app instalada
-  en la ruta x86 con el buscador de actualizaciones operativo.
+- **Qué se hizo:** El instalador ahora **siempre instala en `C:\Program Files (x86)\SaludEnOrden`**: si detecta
+  una instalación anterior en `Program Files`, instala y verifica la nueva primero y solo después elimina la
+  carpeta antigua (limitada a rutas conocidas de Program Files; nunca `%APPDATA%`). Se actualizó el aviso de la
+  interfaz para explicar la migración.
+- **Qué genera:** `dist\SaludEnOrden-v0.13.2.3.exe`, desinstalador, `app_bundle.zip` y la app instalada en x86.
 - **Por:** OpenCode (agente), a solicitud del titular.
-- **Resultado:** **Exitoso** (instalación verificada: HTTP 200, versión 0.13.2.2, API sin falsos positivos).
-- **Respaldo local:** `R:\Programación\OpenCode\Historial Medico Personal - Respaldos\Versiones\2026-11\v0.13.2.1 (2026-11-20_1251)` y su ZIP, creados inmediatamente antes de aplicar el cambio.
-- **Commit del cambio:** `ed0afa8` (instalador y desinstalador). Push a `main` exitoso.
-- **SHA256 del instalador:** `A7DF3BB8BD8BA24235C12B9764012AD53BAAFD888105B82AF2A7D22F3EFCD36B` (`dist\SaludEnOrden-v0.13.2.2.exe`, 30.42 MB).
+- **Resultado:** **Exitoso** (prueba aislada: instaló en la ruta nueva, verificó versión `0.13.2.3` y eliminó la
+  instalación simulada antigua; sin tocar datos personales).
+- **Respaldo local:** `R:\Programación\OpenCode\Historial Medico Personal - Respaldos\Versiones\2026-11\v0.13.2.2 (2026-11-20_1301)` y su ZIP, creados antes de este cambio.
+- **Commit del cambio:** `2959539` (versión anterior). Push a `main` exitoso.
+- **SHA256 del instalador:** `84D5780579265BDB8CC66DA187BF6D478C0F12A4377AC6B38B280ED8CB733EE8` (`dist\SaludEnOrden-v0.13.2.3.exe`, 30.43 MB).
 
 ## Grados del formato `MAJOR.MINOR.PATCH.BUILD`
 
@@ -66,7 +66,8 @@ Fuente de verdad de la versión: el parámetro `?v=` en `index.html`.
 | 0.13.1.0 | v3.0.1 | 2026-11-11 | Corrección del caché offline: `index.html` se sirve primero desde la red y la app se recarga una vez | Arreglo de actualizaciones | OpenCode (agente) | Posteriormente modificado → 0.13.2.0 |
 | 0.13.2.0 | v3.0.2 | 2026-11-11 | Menú Registrar simplificado: todo en «Medición rápida», con Pulso y SpO2 | Ajuste de interfaz | OpenCode (agente) | Posteriormente modificado → 0.13.2.1 |
 | 0.13.2.1 | — | 2026-11-20 | Adopción SemVer + BUILD, changelog, orden de carpetas, Git portable con credencial protegida, remote sin token y scripts ajustados a cuatro números | Registro, copias y seguridad | OpenCode (agente) | Posteriormente modificado → 0.13.2.2 |
-| 0.13.2.2 | — | 2026-11-20 | Instalador sin tkinter, detección HKLM/x86, cierre gradual, Escritorio OneDrive, desinstalador reforzado y migración real a `Program Files (x86)` | Instalador y desinstalador verificados | OpenCode (agente) | **Exitoso** |
+| 0.13.2.2 | — | 2026-11-20 | Instalador sin tkinter, detección HKLM/x86, cierre gradual, Escritorio OneDrive, desinstalador reforzado y migración real a `Program Files (x86)` | Instalador y desinstalador verificados | OpenCode (agente) | Posteriormente modificado → 0.13.2.3 |
+| 0.13.2.3 | — | 2026-11-20 | Migración automática a x86: instalar, verificar y solo entonces borrar la instalación antigua de Program Files | Regla de instalación permanente | OpenCode (agente) | **Exitoso** |
 
 ## Plantilla para el próximo cambio
 
