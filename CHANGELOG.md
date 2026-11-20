@@ -16,7 +16,8 @@ Fuente de verdad de la versión: el parámetro `?v=` en `index.html`.
   y un instalador con nombre de cuatro partes (a generar en la próxima compilación).
 - **Por:** OpenCode (agente), a solicitud del titular.
 - **Resultado:** **Exitoso** (si una revisión posterior corrige algo, se anotará aquí y se creará un BUILD nuevo).
-- **Respaldo local:** `R:\Programación\OpenCode\Historial Medico Personal - Respaldos\Versiones\2026-11\v0.13.2.1 ...`
+- **Respaldo local:** `R:\Programación\OpenCode\Historial Medico Personal - Respaldos\Versiones\2026-11\v0.13.2.1 (2026-11-20_1211)` y su ZIP `SaludEnOrden-v0.13.2.1 (2026-11-20_1211).zip`, ambos verificados.
+- **Commit del cambio:** `23747b5` (más `1389a0b` de la organización previa). Push a `main` exitoso.`
 
 ## Grados del formato `MAJOR.MINOR.PATCH.BUILD`
 
