@@ -47,7 +47,7 @@ Si prefieres abrir SaludEnOrden en su propia ventana, como un programa normal (s
 ## Descargas y actualizaciones
 
 Los instaladores se publican en **GitHub Releases** del repositorio:
-`https://github.com/JArmandoMP/historial-medico-personal/releases`
+`https://github.com/JArmandoMP/SaludEnOrden/releases`
 
 Desde **Configuración → Actualizaciones**, la app consulta la API pública de GitHub para detectar versiones nuevas. Si hay conexión, ofrece descargar el instalador; si no, busca un instalador en `Descargas` o el `Escritorio`. Ningún dato médico se envía en esa consulta.
 

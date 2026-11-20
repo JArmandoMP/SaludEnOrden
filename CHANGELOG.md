@@ -15,10 +15,15 @@ Fuente de verdad de la versión: el parámetro `?v=` en `index.html`.
   envío de historial a internet, hash verificable y advertencia de SmartScreen por falta de firma digital.
 - **Qué genera:** `dist\SaludEnOrden-v0.13.2.4.exe`, desinstalador, `app_bundle.zip` y la app instalada en x86.
 - **Por:** OpenCode (agente), a solicitud del titular.
-- **Resultado:** **Exitoso** (app compilada verificada: HTTP 200 con v0.13.2.4; `check-updates` devuelve
-  `source=local` ante el 404 de GitHub porque todavía no existe la Release pública; sin envío de datos).
-- **Pendiente externo:** publicar la Release `v0.13.2.4` con el instalador adjunto y hacer público el repositorio
-  para que el buscador detecte versiones desde otra PC. No requiere cambiar el código.
+- **Resultado:** **Exitoso** (verificación de extremo a extremo: API pública → Release `v0.13.2.4` → el buscador
+  devuelve `available=true, version=0.13.2.4, source=github` con `current=0.13.2.3`; la descarga desde la app
+  produjo un `.exe` de 30.43 MB con SHA256 idéntico al artefacto local. Con `current=0.13.2.4` devuelve
+  `available=false`, sin falsos positivos).
+- **Publicación:** repositorio público `JArmandoMP/SaludEnOrden` (el nombre anterior `historial-medico-personal`
+  rediriga 301; por eso el código y los docs antiguos siguen funcionando). Release `v0.13.2.4` con el instalador
+  adjunto, descarga anónima verificada (HTTP 200, 31.909.956 bytes).
+- **Nota:** la URL embebida en el buscador usa el nombre antiguo del repo, que GitHub redirige correctamente; se
+  conserva para no recompilar ni invalidar el SHA256 ya publicado.
 - **Respaldo local:** `R:\Programación\OpenCode\Historial Medico Personal - Respaldos\Versiones\2026-11\v0.13.2.3 (2026-11-20_1312)` y su ZIP, creados antes de este cambio.
 - **Commit del cambio:** `5f4d3f5` (versión anterior). Push a `main` exitoso.
 - **SHA256 del instalador:** `F298BFCACC9F14F53A1B1D3323E2FEEDBBD0FE3FCC35D43AFF6B258024DD6511` (`dist\SaludEnOrden-v0.13.2.4.exe`, 30.43 MB).
