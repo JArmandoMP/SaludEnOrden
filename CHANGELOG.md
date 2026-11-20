@@ -6,18 +6,19 @@ Fuente de verdad de la versión: el parámetro `?v=` en `index.html`.
 
 ## Último registro (para resúmenes rápidos)
 
-- **Versión:** `0.13.2.1`
+- **Versión:** `0.13.2.2`
 - **Fecha:** 2026-11-20
-- **Qué se hizo:** Se adoptó el estándar `MAJOR.MINOR.PATCH.BUILD`; se renumeró todo el historial
-  anterior a la nueva línea; se creó este changelog; se ordenaron las carpetas bajo
-  `R:\Programación\OpenCode`; se instaló Git portable con credencial fuera del `.git/config`;
-  y se ajustó el script de respaldo y el buscador de actualizaciones a cuatro números.
-- **Qué genera:** Un registro auditable de versiones, copias locales ordenadas, copia en GitHub
-  y un instalador con nombre de cuatro partes (a generar en la próxima compilación).
+- **Qué se hizo:** Se reforzó el instalador (detección en HKCU/HKLM y en ambas rutas de Program Files,
+  cierre gradual de la app, diálogos nativos sin dependencia de tkinter, Escritorio redirigido a OneDrive)
+  y el desinstalador (accesos, registro en ambos hives y conservación de datos por defecto). Se migró la
+  instalación real a `C:\Program Files (x86)\SaludEnOrden` sin desinstalar ni tocar el perfil WebView2.
+- **Qué genera:** `dist\SaludEnOrden-v0.13.2.2.exe`, desinstalador, `app_bundle.zip` y la app instalada
+  en la ruta x86 con el buscador de actualizaciones operativo.
 - **Por:** OpenCode (agente), a solicitud del titular.
-- **Resultado:** **Exitoso** (si una revisión posterior corrige algo, se anotará aquí y se creará un BUILD nuevo).
-- **Respaldo local:** `R:\Programación\OpenCode\Historial Medico Personal - Respaldos\Versiones\2026-11\v0.13.2.1 (2026-11-20_1211)` y su ZIP `SaludEnOrden-v0.13.2.1 (2026-11-20_1211).zip`, ambos verificados.
-- **Commit del cambio:** `23747b5` (más `1389a0b` de la organización previa). Push a `main` exitoso.`
+- **Resultado:** **Exitoso** (instalación verificada: HTTP 200, versión 0.13.2.2, API sin falsos positivos).
+- **Respaldo local:** `R:\Programación\OpenCode\Historial Medico Personal - Respaldos\Versiones\2026-11\v0.13.2.1 (2026-11-20_1251)` y su ZIP, creados inmediatamente antes de aplicar el cambio.
+- **Commit del cambio:** `ed0afa8` (instalador y desinstalador). Push a `main` exitoso.
+- **SHA256 del instalador:** `A7DF3BB8BD8BA24235C12B9764012AD53BAAFD888105B82AF2A7D22F3EFCD36B` (`dist\SaludEnOrden-v0.13.2.2.exe`, 30.42 MB).
 
 ## Grados del formato `MAJOR.MINOR.PATCH.BUILD`
 
@@ -64,7 +65,8 @@ Fuente de verdad de la versión: el parámetro `?v=` en `index.html`.
 | 0.13.0.0 | v3.0.0 | 2026-11-11 | Carpeta de respaldo automático en disco y buscador de actualizaciones de un clic | Actualizaciones | OpenCode (agente) | Posteriormente modificado → 0.13.1.0 |
 | 0.13.1.0 | v3.0.1 | 2026-11-11 | Corrección del caché offline: `index.html` se sirve primero desde la red y la app se recarga una vez | Arreglo de actualizaciones | OpenCode (agente) | Posteriormente modificado → 0.13.2.0 |
 | 0.13.2.0 | v3.0.2 | 2026-11-11 | Menú Registrar simplificado: todo en «Medición rápida», con Pulso y SpO2 | Ajuste de interfaz | OpenCode (agente) | Posteriormente modificado → 0.13.2.1 |
-| 0.13.2.1 | — | 2026-11-20 | Adopción SemVer + BUILD, changelog, orden de carpetas, Git portable con credencial protegida, remote sin token y scripts ajustados a cuatro números | Registro, copias y seguridad | OpenCode (agente) | **Exitoso** |
+| 0.13.2.1 | — | 2026-11-20 | Adopción SemVer + BUILD, changelog, orden de carpetas, Git portable con credencial protegida, remote sin token y scripts ajustados a cuatro números | Registro, copias y seguridad | OpenCode (agente) | Posteriormente modificado → 0.13.2.2 |
+| 0.13.2.2 | — | 2026-11-20 | Instalador sin tkinter, detección HKLM/x86, cierre gradual, Escritorio OneDrive, desinstalador reforzado y migración real a `Program Files (x86)` | Instalador y desinstalador verificados | OpenCode (agente) | **Exitoso** |
 
 ## Plantilla para el próximo cambio
 

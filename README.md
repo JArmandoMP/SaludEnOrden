@@ -5,7 +5,7 @@ SaludEnOrden es una aplicación web local para guardar y consultar tu historial 
 ## Cómo abrir la aplicación
 
 ### Como programa de escritorio (recomendado)
-Ejecuta `dist/SaludEnOrden-v0.13.2.1.exe` y sigue el asistente (los instaladores nuevos se llaman `SaludEnOrden-vMAJOR.MINOR.PATCH.BUILD.exe`). Detecta si ya está instalada y la actualiza sin borrar tus datos. Se instalará en `C:\Program Files\SaludEnOrden` y creará accesos directos en el Escritorio y el Menú Inicio. Al abrirlo, se ejecuta en una ventana propia (sin navegador) y funciona sin internet.
+Ejecuta `dist/SaludEnOrden-v0.13.2.2.exe` y sigue el asistente (los instaladores nuevos se llaman `SaludEnOrden-vMAJOR.MINOR.PATCH.BUILD.exe`). Detecta si ya está instalada y la actualiza sin borrar tus datos. Se instalará en `C:\Program Files (x86)\SaludEnOrden` y creará accesos directos en el Escritorio y el Menú Inicio. Al abrirlo, se ejecuta en una ventana propia (sin navegador) y funciona sin internet.
 
 ### Como página web
 Abre el archivo `index.html` con un navegador moderno (Chrome, Edge o Firefox).

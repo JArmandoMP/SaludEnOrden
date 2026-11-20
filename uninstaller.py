@@ -117,6 +117,8 @@ def remove_health_data():
         os.path.join(appdata, "ChromeProfile"),
         os.path.join(appdata, "EBWebView"),
         os.path.join(appdata, "WebView2"),
+        # pywebview guarda aqui el perfil WebView2 real de la aplicacion.
+        os.path.join(appdata, "pywebview", "EBWebView"),
         os.path.join(os.environ.get("TEMP", ""), "SaludEnOrdenProfile"),
     ]
     for p in candidates:

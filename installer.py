@@ -1,7 +1,7 @@
 import os, sys, time, zipfile, ctypes, subprocess
 
 APP_NAME = "SaludEnOrden"
-APP_VERSION = "0.13.2.1"   # sincronizar con index.html (?v=) en cada subida de version
+APP_VERSION = "0.13.2.2"   # sincronizar con index.html (?v=) en cada subida de version
 BUNDLE = "app_bundle.zip"
 UNINSTALL_KEY = r"Software\Microsoft\Windows\CurrentVersion\Uninstall\%s" % APP_NAME
 KNOWN_DIRS = (
@@ -126,6 +126,21 @@ def close_running_app():
     return not app_running()
 
 
+def desktop_path():
+    """Ruta real del Escritorio, incluso si esta redirigido a OneDrive."""
+    try:
+        out = subprocess.run(
+            ["powershell", "-NoProfile", "-Command", "[Environment]::GetFolderPath('Desktop')"],
+            capture_output=True, timeout=10,
+        )
+        p = (out.stdout or b"").decode("utf-8", "ignore").strip()
+        if p and os.path.isdir(p):
+            return p
+    except Exception:
+        pass
+    return os.path.join(os.path.expanduser("~"), "Desktop")
+
+
 def create_shortcut(target, shortcut_path, icon=None, workdir=None):
     if workdir is None:
         workdir = os.path.dirname(target)
@@ -167,7 +182,7 @@ def perform_install(target, bundle, run_after=False):
     icon = os.path.join(target, "_internal", "assets", "img", "icon.ico")
     if not os.path.exists(icon):
         icon = None
-    desk = os.path.join(os.path.expanduser("~"), "Desktop")
+    desk = desktop_path()
     create_shortcut(launcher, os.path.join(desk, APP_NAME + ".lnk"), icon, target)
     sm = os.path.join(os.environ.get("APPDATA", ""), "Microsoft", "Windows", "Start Menu", "Programs")
     os.makedirs(sm, exist_ok=True)

@@ -20,7 +20,7 @@ El detalle de cada cambio, con fecha, qué genera, autor y resultado, está en *
 
 Cada versión genera su propio instalador con los cuatro números en el nombre:
 
-- Ejemplo: `SaludEnOrden-v0.13.2.1.exe`
+- Ejemplo: `SaludEnOrden-v0.13.2.2.exe`
 - Formato: `SaludEnOrden-vMAJOR.MINOR.PATCH.BUILD.exe`
 
 Todos se instalan encima de la instalación existente (sin desinstalar) y conservan los datos.
