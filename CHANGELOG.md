@@ -24,6 +24,10 @@ Fuente de verdad de la versión: el parámetro `?v=` en `index.html`.
   adjunto, descarga anónima verificada (HTTP 200, 31.909.956 bytes).
 - **Nota:** la URL embebida en el buscador usa el nombre antiguo del repo, que GitHub redirige correctamente; se
   conserva para no recompilar ni invalidar el SHA256 ya publicado.
+- **Rotación de credencial (2026-11-20):** se retiró el token clásico compartido con los proyectos dados de baja
+  (`Control de Gastos`, `synkora`). Se guardó un token de granularidad fina válido únicamente para `SaludEnOrden`
+  (permiso `Contents: Read and Write`, 90 días) y se verificó `push` con exit 0. La revocación del token viejo
+  debe hacerla el titular en GitHub. Sin cambio de versión ni de artefactos.
 - **Respaldo local:** `R:\Programación\OpenCode\Historial Medico Personal - Respaldos\Versiones\2026-11\v0.13.2.3 (2026-11-20_1312)` y su ZIP, creados antes de este cambio.
 - **Commit del cambio:** `5f4d3f5` (versión anterior). Push a `main` exitoso.
 - **SHA256 del instalador:** `F298BFCACC9F14F53A1B1D3323E2FEEDBBD0FE3FCC35D43AFF6B258024DD6511` (`dist\SaludEnOrden-v0.13.2.4.exe`, 30.43 MB).
