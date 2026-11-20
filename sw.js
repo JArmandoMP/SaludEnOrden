@@ -1,5 +1,5 @@
 // SaludEnOrden · Service Worker (caché offline)
-const CACHE = 'saludenorden-v0.13.2.3';
+const CACHE = 'saludenorden-v0.13.2.4';
 const ASSETS = [
   './',
   './index.html',

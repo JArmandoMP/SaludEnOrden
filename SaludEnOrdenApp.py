@@ -1,8 +1,10 @@
-import os, sys, socket, threading, time, tempfile, shutil, subprocess, json, re
+import os, sys, socket, threading, time, tempfile, shutil, subprocess, json, re, urllib.request
 from urllib.parse import urlparse, parse_qs
 
 APP_NAME = "SaludEnOrden"
 PORT = 8099
+GITHUB_RELEASES_API = "https://api.github.com/repos/JArmandoMP/historial-medico-personal/releases/latest"
+MAX_UPDATE_BYTES = 250 * 1024 * 1024
 
 # En modo --windowed (pythonw) sys.stdout/sys.stderr son None, y http.server
 # intenta escribir el log de cada peticion en sys.stderr -> AttributeError ->
@@ -123,7 +125,11 @@ def main():
             parts = []
         return tuple((parts + [0, 0, 0, 0])[:4])
 
+    # Versiones encontradas en GitHub Releases: version -> (url, bytes)
+    REMOTE_UPDATES = {}
+
     def scan_updates(current):
+        """Fallback sin conexion: busca el instalador en carpetas locales."""
         folders = []
         for env in ("USERPROFILE", "PUBLIC"):
             base = os.environ.get(env)
@@ -154,8 +160,80 @@ def main():
             except Exception as e:
                 log("scan err %r" % e)
         if best:
-            return {"available": True, "version": best[0], "path": best[1]}
-        return {"available": False, "version": None, "path": None}
+            return {"available": True, "version": best[0], "path": best[1], "source": "local"}
+        return {"available": False, "version": None, "path": None, "source": "local"}
+
+    def scan_github_releases(current):
+        """Consulta SOLO la API publica de GitHub. No envia ningun dato de la app.
+
+        Devuelve None si no hay conexion, no hay release o no hay una version
+        nueva; en ese caso se usa el fallback local. Nunca se descarga nada
+        automaticamente: la descarga ocurre solo cuando el usuario lo pide.
+        """
+        try:
+            req = urllib.request.Request(GITHUB_RELEASES_API, headers={
+                "User-Agent": "SaludEnOrden-Updater/1.0",
+                "Accept": "application/vnd.github+json",
+            })
+            with urllib.request.urlopen(req, timeout=8) as resp:
+                data = json.loads(resp.read(1024 * 1024).decode("utf-8"))
+            best = None
+            for asset in (data.get("assets") or []):
+                name = asset.get("name") or ""
+                m = INSTALLER_RE.search(name)
+                if not m:
+                    continue
+                v = "%s.%s.%s.%s" % (m.group(1), m.group(2), m.group(3), m.group(4))
+                if _ver_tuple(v) <= _ver_tuple(current):
+                    continue
+                url = asset.get("browser_download_url") or ""
+                size = int(asset.get("size") or 0)
+                if not url.startswith("https://") or size > MAX_UPDATE_BYTES:
+                    continue
+                if best is None or _ver_tuple(v) > _ver_tuple(best[0]):
+                    best = (v, url, size, name)
+            if not best:
+                return None
+            v, url, size, name = best
+            REMOTE_UPDATES[v] = (url, size, name)
+            log("github release disponible: %s (%s)" % (v, name))
+            return {"available": True, "version": v, "path": None, "url": url,
+                    "source": "github"}
+        except Exception as e:
+            log("github updates no disponible: %r" % e)
+            return None
+
+    def download_github_update(version):
+        """Descarga el instalador validado previamente desde la release."""
+        entry = REMOTE_UPDATES.get(version)
+        if not entry:
+            raise RuntimeError("version no disponible en GitHub")
+        url, size, name = entry
+        if not url.startswith("https://") or not INSTALLER_RE.search(name):
+            raise RuntimeError("descarga no valida")
+        dest_dir = os.path.join(os.environ.get("LOCALAPPDATA") or tempfile.gettempdir(),
+                                APP_NAME, "Updates")
+        os.makedirs(dest_dir, exist_ok=True)
+        dest = os.path.join(dest_dir, name)
+        if os.path.isfile(dest) and (not size or os.path.getsize(dest) == size):
+            return dest
+        req = urllib.request.Request(url, headers={"User-Agent": "SaludEnOrden-Updater/1.0"})
+        tmp = dest + ".part"
+        with urllib.request.urlopen(req, timeout=60) as src, open(tmp, "wb") as out:
+            written = 0
+            while True:
+                chunk = src.read(256 * 1024)
+                if not chunk:
+                    break
+                written += len(chunk)
+                if written > MAX_UPDATE_BYTES or (size and written > size):
+                    raise RuntimeError("el archivo descargado es mas grande de lo esperado")
+                out.write(chunk)
+        if size and written != size:
+            raise RuntimeError("descarga incompleta")
+        os.replace(tmp, dest)
+        log("actualizacion descargada: %s" % dest)
+        return dest
 
     from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 
@@ -184,11 +262,23 @@ def main():
                 qs = parse_qs(parsed.query)
                 current = (qs.get("current") or ["0.0.0.0"])[0]
                 try:
-                    res = scan_updates(current)
+                    res = scan_github_releases(current) or scan_updates(current)
                 except Exception as e:
                     log("check-updates err: %r" % e)
-                    res = {"available": False, "error": str(e)}
+                    try:
+                        res = scan_updates(current)
+                    except Exception as e2:
+                        res = {"available": False, "error": str(e2), "source": "local"}
                 self._send_json(res)
+            elif parsed.path == "/__api/download-update":
+                qs = parse_qs(parsed.query)
+                version = (qs.get("version") or [""])[0]
+                try:
+                    path = download_github_update(version)
+                    self._send_json({"ok": True, "path": path, "version": version})
+                except Exception as e:
+                    log("download-update err: %r" % e)
+                    self._send_json({"ok": False, "error": str(e)}, 400)
             elif parsed.path == "/__api/launch-installer":
                 qs = parse_qs(parsed.query)
                 path = (qs.get("path") or [""])[0]

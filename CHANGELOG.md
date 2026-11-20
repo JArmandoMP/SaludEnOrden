@@ -6,19 +6,22 @@ Fuente de verdad de la versión: el parámetro `?v=` en `index.html`.
 
 ## Último registro (para resúmenes rápidos)
 
-- **Versión:** `0.13.2.3`
+- **Versión:** `0.13.2.4`
 - **Fecha:** 2026-11-20
-- **Qué se hizo:** El instalador ahora **siempre instala en `C:\Program Files (x86)\SaludEnOrden`**: si detecta
-  una instalación anterior en `Program Files`, instala y verifica la nueva primero y solo después elimina la
-  carpeta antigua (limitada a rutas conocidas de Program Files; nunca `%APPDATA%`). Se actualizó el aviso de la
-  interfaz para explicar la migración.
-- **Qué genera:** `dist\SaludEnOrden-v0.13.2.3.exe`, desinstalador, `app_bundle.zip` y la app instalada en x86.
+- **Qué se hizo:** El buscador de actualizaciones consulta ahora la API pública de GitHub Releases; si hay una versión
+  nueva, la descarga solo tras confirmación del usuario (a `%LOCALAPPDATA%\SaludEnOrden\Updates`) y abre el instalador.
+  Sin conexión o sin Release, mantiene el fallback en `Descargas`/`Escritorio`. Se añadieron avisos honestos de
+  privacidad y distribución en el instalador y en Ajustes: uso personal gratuito, datos solo en el dispositivo, sin
+  envío de historial a internet, hash verificable y advertencia de SmartScreen por falta de firma digital.
+- **Qué genera:** `dist\SaludEnOrden-v0.13.2.4.exe`, desinstalador, `app_bundle.zip` y la app instalada en x86.
 - **Por:** OpenCode (agente), a solicitud del titular.
-- **Resultado:** **Exitoso** (prueba aislada: instaló en la ruta nueva, verificó versión `0.13.2.3` y eliminó la
-  instalación simulada antigua; sin tocar datos personales).
-- **Respaldo local:** `R:\Programación\OpenCode\Historial Medico Personal - Respaldos\Versiones\2026-11\v0.13.2.2 (2026-11-20_1301)` y su ZIP, creados antes de este cambio.
-- **Commit del cambio:** `2959539` (versión anterior). Push a `main` exitoso.
-- **SHA256 del instalador:** `84D5780579265BDB8CC66DA187BF6D478C0F12A4377AC6B38B280ED8CB733EE8` (`dist\SaludEnOrden-v0.13.2.3.exe`, 30.43 MB).
+- **Resultado:** **Exitoso** (app compilada verificada: HTTP 200 con v0.13.2.4; `check-updates` devuelve
+  `source=local` ante el 404 de GitHub porque todavía no existe la Release pública; sin envío de datos).
+- **Pendiente externo:** publicar la Release `v0.13.2.4` con el instalador adjunto y hacer público el repositorio
+  para que el buscador detecte versiones desde otra PC. No requiere cambiar el código.
+- **Respaldo local:** `R:\Programación\OpenCode\Historial Medico Personal - Respaldos\Versiones\2026-11\v0.13.2.3 (2026-11-20_1312)` y su ZIP, creados antes de este cambio.
+- **Commit del cambio:** `5f4d3f5` (versión anterior). Push a `main` exitoso.
+- **SHA256 del instalador:** `F298BFCACC9F14F53A1B1D3323E2FEEDBBD0FE3FCC35D43AFF6B258024DD6511` (`dist\SaludEnOrden-v0.13.2.4.exe`, 30.43 MB).
 
 ## Grados del formato `MAJOR.MINOR.PATCH.BUILD`
 
@@ -67,7 +70,8 @@ Fuente de verdad de la versión: el parámetro `?v=` en `index.html`.
 | 0.13.2.0 | v3.0.2 | 2026-11-11 | Menú Registrar simplificado: todo en «Medición rápida», con Pulso y SpO2 | Ajuste de interfaz | OpenCode (agente) | Posteriormente modificado → 0.13.2.1 |
 | 0.13.2.1 | — | 2026-11-20 | Adopción SemVer + BUILD, changelog, orden de carpetas, Git portable con credencial protegida, remote sin token y scripts ajustados a cuatro números | Registro, copias y seguridad | OpenCode (agente) | Posteriormente modificado → 0.13.2.2 |
 | 0.13.2.2 | — | 2026-11-20 | Instalador sin tkinter, detección HKLM/x86, cierre gradual, Escritorio OneDrive, desinstalador reforzado y migración real a `Program Files (x86)` | Instalador y desinstalador verificados | OpenCode (agente) | Posteriormente modificado → 0.13.2.3 |
-| 0.13.2.3 | — | 2026-11-20 | Migración automática a x86: instalar, verificar y solo entonces borrar la instalación antigua de Program Files | Regla de instalación permanente | OpenCode (agente) | **Exitoso** |
+| 0.13.2.3 | — | 2026-11-20 | Migración automática a x86: instalar, verificar y solo entonces borrar la instalación antigua de Program Files | Regla de instalación permanente | OpenCode (agente) | Posteriormente modificado → 0.13.2.4 |
+| 0.13.2.4 | — | 2026-11-20 | Buscador vía GitHub Releases con descarga bajo confirmación y fallback local; avisos de privacidad y distribución en instalador y app | Descarga por link y avisos al usuario | OpenCode (agente) | **Exitoso** |
 
 ## Plantilla para el próximo cambio
 

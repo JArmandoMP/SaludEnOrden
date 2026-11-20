@@ -5,7 +5,7 @@ SaludEnOrden es una aplicación web local para guardar y consultar tu historial 
 ## Cómo abrir la aplicación
 
 ### Como programa de escritorio (recomendado)
-Ejecuta `dist/SaludEnOrden-v0.13.2.3.exe` y sigue el asistente (los instaladores nuevos se llaman `SaludEnOrden-vMAJOR.MINOR.PATCH.BUILD.exe`). Detecta si ya está instalada y la actualiza sin borrar tus datos. Se instalará en `C:\Program Files (x86)\SaludEnOrden` y creará accesos directos en el Escritorio y el Menú Inicio. Al abrirlo, se ejecuta en una ventana propia (sin navegador) y funciona sin internet.
+Ejecuta `dist/SaludEnOrden-v0.13.2.4.exe` y sigue el asistente (los instaladores nuevos se llaman `SaludEnOrden-vMAJOR.MINOR.PATCH.BUILD.exe`). Detecta si ya está instalada y la actualiza sin borrar tus datos. Se instalará en `C:\Program Files (x86)\SaludEnOrden` y creará accesos directos en el Escritorio y el Menú Inicio. Al abrirlo, se ejecuta en una ventana propia (sin navegador) y funciona sin internet.
 
 ### Como página web
 Abre el archivo `index.html` con un navegador moderno (Chrome, Edge o Firefox).
@@ -39,6 +39,19 @@ Si prefieres abrir SaludEnOrden en su propia ventana, como un programa normal (s
 - No se envía información a servidores ni servicios externos.
 - Las imágenes y documentos adjuntos se almacenan como archivos binarios dentro del navegador.
 - La información no se sincroniza entre dispositivos ni navegadores.
+- Uso personal y distribución gratuita no comercial: cada persona guarda su propio historial en su equipo.
+- La única conexión opcional es la búsqueda de versiones nuevas en GitHub Releases; no transmite datos personales.
+- El instalador es de código abierto y no contiene datos personales; verifica el SHA256 publicado en `CHANGELOG.md`.
+- No está firmado digitalmente: Windows SmartScreen puede mostrar una advertencia al descargarlo. Comprueba siempre la fuente y el hash antes de ejecutarlo.
+
+## Descargas y actualizaciones
+
+Los instaladores se publican en **GitHub Releases** del repositorio:
+`https://github.com/JArmandoMP/historial-medico-personal/releases`
+
+Desde **Configuración → Actualizaciones**, la app consulta la API pública de GitHub para detectar versiones nuevas. Si hay conexión, ofrece descargar el instalador; si no, busca un instalador en `Descargas` o el `Escritorio`. Ningún dato médico se envía en esa consulta.
+
+> El repositorio debe ser público para que la descarga por link funcione en otras PC sin cuenta de GitHub.
 
 ## Respaldo y restauración
 

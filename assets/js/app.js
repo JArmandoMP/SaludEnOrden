@@ -723,6 +723,13 @@
       '</div>' +
 
       '<div class="form-section">' +
+        '<div class="form-section-title">' + HM.icon('shield') + ' Privacidad y uso</div>' +
+        '<p class="small muted" style="line-height:1.6">SaludEnOrden es un programa de uso personal y distribución gratuita no comercial, pensado para que cada persona lleve su propio historial.</p>' +
+        '<p class="small muted" style="line-height:1.6"><strong>Tus datos no salen de este dispositivo.</strong> No hay cuentas en la nube, ni envío de historial médico a internet. La única conexión es la comprobación opcional de versiones en GitHub, que no transmite información personal. Si borras los datos de este equipo, no hay copia en ningún servidor.</p>' +
+        '<p class="small muted" style="line-height:1.6">El instalador se compila desde código abierto y no incluye datos personales. Puedes comprobar su integridad con el SHA256 publicado en el CHANGELOG. No está firmado digitalmente: Windows SmartScreen puede mostrar una advertencia al descargarlo; eso no significa que contenga malware, pero verifica siempre el hash y la fuente.</p>' +
+      '</div>' +
+
+      '<div class="form-section">' +
         '<div class="form-section-title">' + HM.icon('user') + ' Mi cuenta</div>' +
         '<p class="small muted" style="line-height:1.55">La cuenta "' + HM.escape(me.name) + '" y toda su información viven solo en este dispositivo. Si eliminas tu cuenta, podrás crear otra desde cero.</p>' +
         '<div class="row row-center mt-2"><button type="button" class="btn btn-danger" data-delete-account>' + HM.icon('trash') + ' Eliminar mi cuenta y su información</button></div>' +
@@ -730,7 +737,7 @@
 
       '<div class="form-section">' +
         '<div class="form-section-title">' + HM.icon('refresh') + ' Actualizaciones</div>' +
-        '<p class="small muted" style="line-height:1.55">Busca un instalador de SaludEnOrden más nuevo en tu carpeta Descargas o Escritorio. Si lo encuentra, lo abrirá por ti.</p>' +
+        '<p class="small muted" style="line-height:1.55">Busca versiones nuevas en GitHub Releases. Si no hay conexión, revisa también tu carpeta Descargas o Escritorio. Solo se consulta si hay una versión nueva: nunca se envían tus datos médicos.</p>' +
         '<div class="row mt-2"><button type="button" class="btn btn-soft" data-check-update>' + HM.icon('search') + ' Buscar actualización</button></div>' +
         '<p class="form-note mt-2" id="updateStatus">Versión actual: ' + HM.escape(HM.appVersion()) + '</p>' +
       '</div>' +
@@ -970,14 +977,33 @@
               const res = await fetch('/__api/check-updates?current=' + encodeURIComponent(HM.appVersion()));
               const data = await res.json();
               if (data && data.available) {
+                const desdeGithub = data.source === 'github';
                 const ok = await HM.confirm({
                   title: 'Actualización disponible',
-                  message: 'Se encontró SaludEnOrden v' + data.version + ' (tú tienes v' + HM.appVersion() + ').\n\nEl instalador se abrirá y tú solo sigues el asistente (Actualizar). ¿Continuar?',
-                  confirmText: 'Instalar ahora',
+                  message: 'Se encontró SaludEnOrden v' + data.version + ' (tú tienes v' + HM.appVersion() + ').\n\n' +
+                    (desdeGithub
+                      ? 'Se descargará el instalador desde GitHub (aprox. 30 MB) y se abrirá. No se envían tus datos personales.\n\n¿Continuar?'
+                      : 'El instalador se abrirá desde tu equipo y tú solo sigues el asistente (Actualizar). ¿Continuar?'),
+                  confirmText: desdeGithub ? 'Descargar e instalar' : 'Instalar ahora',
                   icon: 'download'
                 });
                 if (!ok) return;
-                const r2 = await fetch('/__api/launch-installer?path=' + encodeURIComponent(data.path));
+                let installerPath = data.path;
+                if (desdeGithub) {
+                  HM.toast('Descargando actualización', 'Descargando v' + data.version + ' desde GitHub…', 'info', 8000);
+                  const d = await fetch('/__api/download-update?version=' + encodeURIComponent(data.version));
+                  const dj = await d.json();
+                  if (!d.ok || !dj.ok) {
+                    HM.toast('No se pudo descargar', (dj.error || 'Revisa tu conexión.') + ' Puedes descargarlo manualmente desde GitHub.', 'error', 7000);
+                    return;
+                  }
+                  installerPath = dj.path;
+                }
+                if (!installerPath) {
+                  HM.toast('No se pudo abrir', 'Abre el instalador manualmente.', 'error', 6000);
+                  return;
+                }
+                const r2 = await fetch('/__api/launch-installer?path=' + encodeURIComponent(installerPath));
                 if (r2.ok) {
                   HM.toast('Instalador abierto', 'Sigue el asistente. La app se cerrará en unos segundos.', 'success', 6000);
                   setTimeout(function () { try { window.close(); } catch (e) { } }, 3500);

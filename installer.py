@@ -1,7 +1,14 @@
 import os, sys, time, shutil, zipfile, ctypes, subprocess
 
 APP_NAME = "SaludEnOrden"
-APP_VERSION = "0.13.2.3"   # sincronizar con index.html (?v=) en cada subida de version
+APP_VERSION = "0.13.2.4"   # sincronizar con index.html (?v=) en cada subida de version
+PRIVACY_NOTICE = (
+    "Uso personal y distribución gratuita no comercial.\n"
+    "Tus datos se guardan solo en este dispositivo: la app no envía tu historial médico a internet.\n"
+    "La única conexión es la búsqueda opcional de actualizaciones en GitHub, sin datos personales.\n"
+    "El instalador contiene solo código y recursos (sin datos personales). Puedes verificar su SHA256 en el CHANGELOG.\n"
+    "No está firmado digitalmente: Windows SmartScreen puede mostrar una advertencia."
+)
 BUNDLE = "app_bundle.zip"
 UNINSTALL_KEY = r"Software\Microsoft\Windows\CurrentVersion\Uninstall\%s" % APP_NAME
 KNOWN_DIRS = (
@@ -326,14 +333,16 @@ def main():
             Text = ("Se actualizara la instalacion existente en:\n%s\n\n"
                     "Sin desinstalar ni borrar tus datos.\n\n¿Continuar?" % target)
         else:
-            Text = ("Instalar %s v%s en:\n%s\n\n¿Continuar?" % (APP_NAME, APP_VERSION, target))
+            Text = ("Instalar %s v%s en:\n%s" % (APP_NAME, APP_VERSION, target))
+        Text += "\n\n" + PRIVACY_NOTICE + "\n\n¿Continuar?"
         if dialog(Text, "Instalar " + APP_NAME, MB_OKCANCEL | MB_ICONQUESTION) != IDOK:
             return 0
 
     try:
         perform_install(target, bundle, run_after=run_after)
         if not silent:
-            dialog("%s v%s se instalo correctamente en:\n%s\n\nTus datos personales no se tocaron."
+            dialog("%s v%s se instalo correctamente en:\n%s\n\nTus datos personales no se tocaron.\n\n"
+                   "Recuerda: uso personal, datos solo en este dispositivo, sin envío a internet."
                    % (APP_NAME, APP_VERSION, target),
                    "Instalacion completada", MB_OK | MB_ICONINFORMATION)
         return 0
