@@ -8,21 +8,20 @@ del momento. Si la app llegara a fallar, se restaura la carpeta (o ZIP) de la ve
 Ejecutar `Hacer-Respaldo.ps1` (clic derecho → *Ejecutar con PowerShell*).
 Crea, dentro de `R:\Programación\OpenCode\Historial Medico Personal - Respaldos\Versiones\AAAA-MM\`:
 
-- `vX.Y (fecha_hora)` — copia completa lista para usar
-- `SaludEnOrden-vX.Y (fecha_hora).zip` — el mismo respaldo comprimido
+- `vMAJOR.MINOR.PATCH.BUILD (fecha_hora)` — copia completa lista para usar
+- `SaludEnOrden-vMAJOR.MINOR.PATCH.BUILD (fecha_hora).zip` — el mismo respaldo comprimido
 
 Los datos personales se guardan aparte en `... - Respaldos\Datos\` y **nunca** se suben a GitHub.
 
-La versión se lee automáticamente de `index.html` (los enlaces terminan en `?v=X.Y.Z`).
-Antes de cada ronda de cambios se incrementa la versión (por ejemplo 2.4.1 → 2.4.2) y se toma el respaldo.
+La versión se lee automáticamente de `index.html` (los enlaces terminan en `?v=MAJOR.MINOR.PATCH.BUILD`).
+El detalle de cada cambio, con fecha, qué genera, autor y resultado, está en **`CHANGELOG.md`**.
 
-### Nombres de los instaladores de parche
+### Nombres de los instaladores
 
-Cada parche genera su propio instalador con la versión en el nombre:
+Cada versión genera su propio instalador con los cuatro números en el nombre:
 
-- Parche 1: `SaludEnOrden-v2.4.1.exe`
-- Parche 2: `SaludEnOrden-v2.4.2.exe` … hasta `SaludEnOrden-v2.4.8.exe`
-- La versión mayor será `SaludEnOrden-v3.0.0.exe`
+- Ejemplo: `SaludEnOrden-v0.13.2.1.exe`
+- Formato: `SaludEnOrden-vMAJOR.MINOR.PATCH.BUILD.exe`
 
 Todos se instalan encima de la instalación existente (sin desinstalar) y conservan los datos.
 
@@ -35,7 +34,10 @@ Todos se instalan encima de la instalación existente (sin desinstalar) y conser
 
 ## Versiones guardadas
 
-| Versión | Fecha       | Respaldo                                             | Qué contiene |
+Los números `v1.x`, `v2.x` y `v3.x` de abajo son **históricos** (previos al estándar).
+Su equivalencia al formato `MAJOR.MINOR.PATCH.BUILD` está en `CHANGELOG.md`.
+
+| Versión (legacy) | Fecha       | Respaldo                                             | Qué contiene |
 |---------|-------------|------------------------------------------------------|--------------|
 | v1.1    | 2026-11-10  | `Historial Medico Personal - RESPALDO 2026-11-10` y `Vitalia-RESPALDO-2026-11-10.zip` | App de un solo usuario con corrección de acentos y cédula profesional (estado previo al modo multiusuario) |
 | v1.2    | 2026-11-10  | `Historial Medico Personal - v1.2 (2026-11-10_1647)` y `Vitalia-v1.2 (2026-11-10_1647).zip` | Modo multiusuario con pantalla de bienvenida y de sesión cerrada, botón "Cerrar sesión", bitácora de cambios con "Última actualización", corrección de la pantalla en blanco al iniciar sesión |

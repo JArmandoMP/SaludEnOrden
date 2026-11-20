@@ -1,7 +1,7 @@
 # ============================================================
 # Hacer-Respaldo.ps1 · Copia de seguridad versionada de SaludEnOrden
 # Uso: clic derecho > "Ejecutar con PowerShell" (o: .\Hacer-Respaldo.ps1)
-# Lee el número de versión de index.html (?v=X.Y) y crea, dentro de:
+# Lee el número de versión de index.html (?v=MAJOR.MINOR.PATCH.BUILD) y crea dentro de:
 #   R:\Programación\OpenCode\Historial Medico Personal - Respaldos\Versiones\AAAA-MM\
 #   1) Carpeta "vX.Y (fecha hora)" con el proyecto completo
 #   2) ZIP "SaludEnOrden-vX.Y (fecha hora).zip" del mismo respaldo
@@ -25,7 +25,7 @@ $version = 'sin-version'
 $indexPath = Join-Path $src 'index.html'
 if (Test-Path $indexPath) {
     $html = Get-Content $indexPath -Raw
-    if ($html -match '\?v=([0-9][0-9.]*)') { $version = $Matches[1] }
+    if ($html -match '\?v=([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)') { $version = $Matches[1] }
 }
 
 $stamp = Get-Date -Format 'yyyy-MM-dd_HHmm'

@@ -112,13 +112,16 @@ def main():
         msgbox("No se pudo acceder a la carpeta de la aplicacion:\n" + str(e))
         return
 
-    INSTALLER_RE = re.compile(r"SaludEnOrden-v(\d+)\.(\d+)\.(\d+)\.exe", re.IGNORECASE)
+    # SemVer + BUILD: SaludEnOrden-vMAJOR.MINOR.PATCH.BUILD.exe
+    INSTALLER_RE = re.compile(r"SaludEnOrden-v(\d+)\.(\d+)\.(\d+)\.(\d+)\.exe", re.IGNORECASE)
 
     def _ver_tuple(v):
+        # Siempre 4 partes (MAJOR.MINOR.PATCH.BUILD) para comparar con seguridad
         try:
-            return tuple(int(x) for x in v.split("."))
+            parts = [int(x) for x in v.split(".")]
         except Exception:
-            return (0, 0, 0)
+            parts = []
+        return tuple((parts + [0, 0, 0, 0])[:4])
 
     def scan_updates(current):
         folders = []
@@ -140,7 +143,7 @@ def main():
                     m = INSTALLER_RE.search(fn)
                     if not m:
                         continue
-                    v = "%s.%s.%s" % (m.group(1), m.group(2), m.group(3))
+                    v = "%s.%s.%s.%s" % (m.group(1), m.group(2), m.group(3), m.group(4))
                     if _ver_tuple(v) <= _ver_tuple(current):
                         continue
                     full = os.path.join(folder, fn)
@@ -179,7 +182,7 @@ def main():
         def _handle_api(self, parsed):
             if parsed.path == "/__api/check-updates":
                 qs = parse_qs(parsed.query)
-                current = (qs.get("current") or ["0.0.0"])[0]
+                current = (qs.get("current") or ["0.0.0.0"])[0]
                 try:
                     res = scan_updates(current)
                 except Exception as e:
