@@ -6,10 +6,12 @@ del momento. Si la app llegara a fallar, se restaura la carpeta (o ZIP) de la ve
 ## Cómo crear un respaldo nuevo
 
 Ejecutar `Hacer-Respaldo.ps1` (clic derecho → *Ejecutar con PowerShell*).
-Crea, junto a la carpeta de la app:
+Crea, dentro de `R:\Programación\OpenCode\Historial Medico Personal - Respaldos\Versiones\AAAA-MM\`:
 
-- `Historial Medico Personal - vX.Y (fecha_hora)` — copia completa lista para usar
+- `vX.Y (fecha_hora)` — copia completa lista para usar
 - `SaludEnOrden-vX.Y (fecha_hora).zip` — el mismo respaldo comprimido
+
+Los datos personales se guardan aparte en `... - Respaldos\Datos\` y **nunca** se suben a GitHub.
 
 La versión se lee automáticamente de `index.html` (los enlaces terminan en `?v=X.Y.Z`).
 Antes de cada ronda de cambios se incrementa la versión (por ejemplo 2.4.1 → 2.4.2) y se toma el respaldo.

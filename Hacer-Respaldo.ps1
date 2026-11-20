@@ -1,14 +1,24 @@
 # ============================================================
 # Hacer-Respaldo.ps1 · Copia de seguridad versionada de SaludEnOrden
 # Uso: clic derecho > "Ejecutar con PowerShell" (o: .\Hacer-Respaldo.ps1)
-# Lee el número de versión de index.html (?v=X.Y) y crea:
-#   1) Carpeta "Historial Medico Personal - vX.Y (fecha hora)"
-#   2) ZIP "SaludEnOrden-vX.Y (fecha hora).zip"
+# Lee el número de versión de index.html (?v=X.Y) y crea, dentro de:
+#   R:\Programación\OpenCode\Historial Medico Personal - Respaldos\Versiones\AAAA-MM\
+#   1) Carpeta "vX.Y (fecha hora)" con el proyecto completo
+#   2) ZIP "SaludEnOrden-vX.Y (fecha hora).zip" del mismo respaldo
+# Los datos personales NO se copian aquí: viven en ... - Respaldos\Datos\
 # ============================================================
 
 $ErrorActionPreference = 'Stop'
-$src = $PSScriptRoot
-$parent = Split-Path $src -Parent
+$src  = $PSScriptRoot
+$base = Split-Path $src -Parent
+
+# Destino fijo y ordenado (todo bajo R:\Programación\OpenCode)
+$backupRoot  = Join-Path $base 'Historial Medico Personal - Respaldos'
+$versionsRoot = Join-Path $backupRoot 'Versiones'
+$monthFolder = Join-Path $versionsRoot (Get-Date -Format 'yyyy-MM')
+if (-not (Test-Path -LiteralPath $monthFolder)) {
+    New-Item -ItemType Directory -Path $monthFolder -Force | Out-Null
+}
 
 # Obtener la versión actual desde index.html
 $version = 'sin-version'
@@ -19,27 +29,28 @@ if (Test-Path $indexPath) {
 }
 
 $stamp = Get-Date -Format 'yyyy-MM-dd_HHmm'
-$folderName = "Historial Medico Personal - v$version ($stamp)"
-$destFolder = Join-Path $parent $folderName
+$folderName = "v$version ($stamp)"
+$destFolder = Join-Path $monthFolder $folderName
 $zipName = "SaludEnOrden-v$version ($stamp).zip"
-$zipPath = Join-Path $parent $zipName
+$zipPath = Join-Path $monthFolder $zipName
 
 # Evitar sobrescribir un respaldo del mismo minuto
 if (Test-Path $destFolder) {
     $stamp = Get-Date -Format 'yyyy-MM-dd_HHmmss'
-    $folderName = "Historial Medico Personal - v$version ($stamp)"
-    $destFolder = Join-Path $parent $folderName
+    $folderName = "v$version ($stamp)"
+    $destFolder = Join-Path $monthFolder $folderName
     $zipName = "SaludEnOrden-v$version ($stamp).zip"
-    $zipPath = Join-Path $parent $zipName
+    $zipPath = Join-Path $monthFolder $zipName
 }
 
 Copy-Item $src $destFolder -Recurse -Force
 Compress-Archive -Path $destFolder -DestinationPath $zipPath -Force
 
 Write-Host ''
-Write-Host "Respaldo creado correctamente:" -ForegroundColor Green
+Write-Host 'Respaldo creado correctamente:' -ForegroundColor Green
+Write-Host "  Versión: $version"
+Write-Host "  Mes:     $monthFolder"
 Write-Host "  Carpeta: $destFolder"
 Write-Host "  ZIP:     $zipPath"
-Write-Host "  Version: v$version"
 Write-Host ''
-Write-Host "Para restaurar: copia el contenido de la carpeta del respaldo sobre la carpeta de la app (o descomprime el ZIP)."
+Write-Host 'Para restaurar: copia el contenido de la carpeta del respaldo sobre la carpeta de la app (o descomprime el ZIP).'
