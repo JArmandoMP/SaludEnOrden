@@ -63,6 +63,8 @@ Desde **Configuración** puedes:
 
 Se recomienda crear respaldos periódicos, especialmente antes de limpiar el navegador o cambiar de dispositivo.
 
+El repo incluye [`db-template/respaldo-vacio.json`](db-template/respaldo-vacio.json): un respaldo **sin ningún dato** (todas las colecciones vacías) que puede cargarse desde **Restaurar datos** para dejar la app como si nunca se hubiera ingresado información. Es público y seguro de compartir; tu respaldo real jamás se sube a GitHub.
+
 ## Datos de ejemplo
 
 En **Configuración → Cargar datos de ejemplo** puedes generar un historial ficticio para probar la aplicación. Esto reemplaza los datos actuales del navegador.

@@ -5,6 +5,8 @@ dist/*.exe
 # Respaldos y datos personales (NUNCA subir: contiene información de salud)
 Respaldo de DATOS/
 *.zip
+# Excepción: respaldo vacío sin datos, públicamente seguro
+!db-template/respaldo-vacio.json
 
 # Copias de versiones anteriores
 Historial Medico Personal - v*/

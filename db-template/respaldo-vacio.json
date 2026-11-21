@@ -1,0 +1,18 @@
+{
+  "app": "vitalia",
+  "version": 1,
+  "exportedAt": "2026-11-20T00:00:00.000Z",
+  "patient": null,
+  "data": {
+    "profile": [],
+    "vitals": [],
+    "records": [],
+    "treatments": [],
+    "doseLogs": [],
+    "appointments": [],
+    "providers": [],
+    "documents": [],
+    "settings": []
+  },
+  "files": []
+}

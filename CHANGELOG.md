@@ -22,6 +22,7 @@ Fuente de verdad de la versión: el parámetro `?v=` en `index.html`.
 - **Publicación:** repositorio público `JArmandoMP/SaludEnOrden` (el nombre anterior `historial-medico-personal`
   rediriga 301; por eso el código y los docs antiguos siguen funcionando). Release `v0.13.2.4` con el instalador
   adjunto, descarga anónima verificada (HTTP 200, 31.909.956 bytes).
+- **Agregado (docs, sin cambio de versión):** `db-template/respaldo-vacio.json`, respaldo sin datos para dejar la app como si nunca se hubiera ingresado información; público y sin datos personales.
 - **Nota:** la URL embebida en el buscador usa el nombre antiguo del repo, que GitHub redirige correctamente; se
   conserva para no recompilar ni invalidar el SHA256 ya publicado.
 - **Rotación de credencial (2026-11-20):** se retiró el token clásico compartido con los proyectos dados de baja
